@@ -14,6 +14,7 @@ def load_user(username):
         user = User.get(username=username)
     except User.DoesNotExist:
         return None
+    return user
 
 class LoginForm(Form):
     username = wtf.TextField('Username')

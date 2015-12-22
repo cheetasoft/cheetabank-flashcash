@@ -32,6 +32,10 @@
     .main {
       border: 1px solid #7F7F7F;
       padding: 10px;
+    }
+    .container {
+      max-width: 500px;
+    }
   </style>
 
 </head>
@@ -40,15 +44,15 @@
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
-    <div class="row">
-      <div class="ten columns" style="margin-top: 25%">
+    <div class="row" style="margin-top: 25%">
+      <div class="twelve columns">
         {% block heading %}
         <h1><i class="fa fa-send"></i><i>FlashCash</i></h1>
         {% endblock %}
       </div>
     </div>
     <div class="row">
-      <div class="ten columns main">
+      <div class="twelve columns main">
         {% block content %}
         {% endblock %}
       </div>

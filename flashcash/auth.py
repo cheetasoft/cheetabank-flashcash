@@ -12,7 +12,7 @@ login_manager.init_app(app)
 def load_user(username):
     try:
         user = User.get(username=username)
-    except db.DoesNotExist:
+    except User.DoesNotExist:
         return None
 
 class LoginForm(Form):
@@ -27,7 +27,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         # Login and validate the user.
-        user = load_user(form.username.data, use_username=True)
+        user = load_user(form.username.data)
         if (not user) or (user.password and user.password != form.password.data):
             msg = 'Invalid username or password'
             if form.errors.has_key('password'):

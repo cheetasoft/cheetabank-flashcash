@@ -39,7 +39,7 @@ def login():
 		    # All OK. Log in the user.
 	        login_user(user)
 	
-	        return redirect(request.args.get('next') or '/')
+	        return redirect(request.args.get('next') or url_for('dashboard'))
 	# Default to returning login page        
     return render_template('login.htm', form=form)
 

@@ -7,3 +7,8 @@ import wtforms as wtf
 @app.route('/')
 def index():
     return render_template('index.htm')
+
+@app.route('/dashboard/')
+@login_required
+def dashboard():
+    return render_template('dashboard.htm')

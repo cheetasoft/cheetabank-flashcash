@@ -1,0 +1,31 @@
+{% extends 'base.htm' %}
+{% from 'macros.htm' import dash_button %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="nine columns">
+    <h4>
+      <i class="fa fa-user"></i>
+      {{ current_user.name }}
+    </h4>
+  </div>
+  <div class="three columns">
+    <a class="button pull-right" href="{{ url_for('logout') }}">
+      <i class="fa fa-sign-out fa-2x"></i>
+    </a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <span><b>Portal:</b> {{  current_user.portal_code }}</span>
+    <span><b>Balance:</b> {{ current_user.balance }}</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    {{ dash_button('plus', 'Claim Notes') }}
+  </div>
+</div>
+{% endblock %}

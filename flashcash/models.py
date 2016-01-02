@@ -13,7 +13,11 @@ class User(db.Model, UserMixin):
     username = pw.CharField(max_length=32, primary_key=True)
     password = pw.CharField(max_length=128)
     email = pw.CharField(null=True)
+
+class Portal(db.Model):
     portal_code = pw.CharField(max_length=2)
+    shop_name = pw.CharField(max_length=32)
+    owner = pw.ForeignKeyField(User)
     balance = pw.DecimalField(decimal_places=2, default=0)
 
 class Branch(db.Model):

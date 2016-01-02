@@ -1,0 +1,41 @@
+{% extends 'base.htm' %}
+{% block title %}Create a FlashCash account{% endblock %}
+{% block content %}
+<h4>Create a FlashCash account</h4>
+<div class="row">
+  <form action="" method="post">
+    {% if form.errors %}
+    <div class="twelve columns">
+      <ul class="errors">
+      {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+        {% for error in field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {{ form.csrf_token }}
+    <div class="twelve columns">
+      {{ form.name.label }}
+      {{ form.name }}
+    </div>
+    <div class="twelve columns">
+      {{ form.email.label }}
+      {{ form.email }}
+    </div>
+    <div class="twelve columns">
+      {{ form.username.label }}
+      {{ form.username }}
+    </div>
+    <div class="twelve columns">
+      {{ form.password.label }}
+      {{ form.password }}
+    </div>
+    <input type="submit" value="Sign in" />
+    <div class="twelve columns">
+      Already have an account? <a href="{{ url_for('login') }}">Click here to sign in.</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

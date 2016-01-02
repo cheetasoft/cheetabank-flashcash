@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     username = pw.CharField(max_length=32, primary_key=True)
     password = pw.CharField(max_length=128)
     email = pw.CharField(null=True)
+    email_confirmed = pw.BooleanField(default=False)
 
 class Portal(db.Model):
     portal_code = pw.CharField(max_length=2)

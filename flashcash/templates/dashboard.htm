@@ -16,16 +16,18 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="twelve columns">
-    <span><b>Portal:</b> {{  current_user.portal_code }}</span>
-    <span><b>Balance:</b> {{ current_user.balance }}</span>
+  {% block dash_content %}
+  <div class="row">
+    <div class="twelve columns">
+      <span><b>Portal:</b> {{  current_user.portal_code }}</span>
+      <span><b>Balance:</b> {{ current_user.balance }}</span>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="twelve columns">
-    {{ dash_button('plus', 'Claim Notes') }}
+  <div class="row">
+    <div class="twelve columns">
+      {{ dash_button('plus', 'Claim Notes') }}
+    </div>
   </div>
-</div>
+  {% endblock %}
 {% endblock %}

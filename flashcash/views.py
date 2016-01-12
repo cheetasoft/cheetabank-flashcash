@@ -58,3 +58,8 @@ def confirm_email(token):
     u.save()
 
     return redirect(url_for('login'))
+
+@app.route('/dashboard/portals/')
+@login_required
+def dash_portals():
+    return render_template('portals/index.htm')

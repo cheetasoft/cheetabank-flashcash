@@ -1,0 +1,31 @@
+{% extends 'dashboard.htm' %}
+{% block title %}My Portals{% endblock %}
+{% block dash_content %}
+
+<div class="row">
+  <div class="twelve columns">
+    <table>
+      <thead>
+        <tr>
+          <th>Portal Code</th>
+          <th>Shop name</th>
+          <th>Current Balance</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in current_user.portals %}
+        <tr>
+          <td>{{ p.portal_code }}</td>
+          <td>{{ p.shop_name }}</td>
+          <td>{{ p.balance }}</td>
+          <td><a href="#">Do Something</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a class="button button-default" href="#"><i class="fa fa-plus"> </i>Add new portal</a>
+  </div>
+</div>
+
+{% endblock %}

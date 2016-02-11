@@ -18,7 +18,7 @@ def load_user(username):
         return None
     return user
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     # Here we use a class of some kind to represent and validate our
     # client-side form data. For example, WTForms is a library that will
@@ -41,7 +41,7 @@ def login():
 	# Default to returning login page        
     return render_template('login.htm', form=form)
 
-@app.route('/logout')
+@app.route('/logout/')
 def logout():
     logout_user()
     flash('You are now logged out.')

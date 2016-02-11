@@ -1,0 +1,36 @@
+{% extends 'dashboard.htm' %}
+{% block title %}Register Payment Portal{% endblock %}
+{% block dash_content %}
+
+<div class="row">
+  <div class="twelve columns">
+    <h4>Register Payment Portal</h4>
+    <form action="{{ url_for('add_portal') }}" method="post">
+      {% if form.errors %}
+      <ul class="errors">
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+          {% for error in field_errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {{ form.csrf_token }}
+      <div class="twelve columns">
+        {{ form.portal_code.label }}
+        {{ form.portal_code }}
+      </div>
+      <div class="twelve columns">
+        {{ form.shop_name.label }}
+        {{ form.shop_name }}
+      </div>
+      <div class="twelve columns">
+        <p class="alert alert-warning">Note: you will have to ask your Cheetabank Branch Manager to verify your Payment Portal before you can begin using it.</p>
+      </div>
+      <input type="submit" value="Register Portal" />
+    </form>  
+  </div>
+</div>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from flask import render_template, flash, request, url_for, redirect, abort
 from app import app
 from auth import login_manager, current_user, login_required
-from models import User, Branch, Note
+from models import User, Branch, Note, Portal
 import forms
 from util.security import ts
 from util.email import send_email
@@ -63,3 +63,23 @@ def confirm_email(token):
 @login_required
 def dash_portals():
     return render_template('portals/index.htm')
+
+@app.route('/dashboard/portals/add', methods=['GET', 'POST'])
+@login_required
+def add_portal():
+    form = forms.PortalShopForm()
+    if form.validate_on_submit():
+        if Portal.select().where(Portal.portal_code == form.data['portal_code']).exists():
+            msg = 'Somebody has already tried to register that portal-code'
+            if form.errors.has_key('portal_code'):
+                form.errors['portal_code'].append(msg)
+            else:
+                form.errors['portal_code'] = [msg]
+        else:
+            p = Portal(portal_code=form.data['portal_code'],
+                shop_name=form.data['shop_name'],
+                owner=current_user.username)
+            p.save()
+            flash('Please ask your Branch Manager to confirm your portal code before you begin using it.')
+            return redirect(url_for('dash_portals'))
+    return render_template('portals/add.htm', form=form)

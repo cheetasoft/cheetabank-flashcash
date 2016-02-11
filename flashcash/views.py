@@ -2,7 +2,7 @@ from flask import render_template, flash, request, url_for, redirect, abort
 from app import app
 from auth import login_manager, current_user, login_required
 from models import User, Branch, Note
-from forms import NameEmailUsernamePasswordForm
+import forms
 from util.security import ts
 from util.email import send_email
 
@@ -17,7 +17,7 @@ def dashboard():
 
 @app.route('/signup/', methods=['GET','POST'])
 def signup():
-    form = NameEmailUsernamePasswordForm()
+    form = forms.NameEmailUsernamePasswordForm()
     if form.validate_on_submit():
         # Check for existing username
         if User.select().where(User.username == form.data['username']).exists():

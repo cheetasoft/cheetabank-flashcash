@@ -1,6 +1,150 @@
 {% extends 'base.htm' %}
-{% block title %}Hello there{% endblock %}
-{% block content %}
-<h4>Hello There!</h4>
-<p>Welcome to FlashCash</p>
+{% block title %}FlashCash{% endblock %}
+{% block extracss %}
+{# url_for('static', filename='css/landing.css') #}
+<style type="text/css">
+/* Sections */
+.section {
+  padding: 8rem 0 7rem;
+  text-align: center;
+}
+.section-description {
+  font-size: 1.2em;
+  opacity: 10%;
+}
+.section-heading,
+.section-description {
+  margin-bottom: 1.2rem;
+}
+
+/* White buttons for some sections */
+.login-or-signup .button, .for-customers .button, .for-shops .button {
+  border-color: #fff;
+  color: #fff;
+}
+
+/* Specific sections */
+.landing-large-icon {
+  font-size: 4em;
+  margin: 10px;
+}
+.login-or-signup {
+  background-color: #0E5CA9;
+  color: #fff;
+}
+.login-or-signup a {
+  color: #D8F6FF;
+}
+.for-customers {
+  background-color: #FE8500;
+  color: #fff;
+}
+.customer-howto {
+  background-color: #FFE200;
+}
+.for-shops {
+  background-color: #369F36;
+  color: #fff;
+}
+.shops-howto {
+  background-color: #80EE8A;
+}
+.shops-howto a {
+  color: #2F6E2F;
+}
+.get-started-now {
+  background-color: #e5e5e5;
+}
+</style>
+{% endblock %}
+{% block body %}
+<div class="section hero">
+  <div class="container">
+    <div class="row">
+      <div class="one-half column">
+        <h4 class="hero-heading">Online transactions made simple.</h4>
+        <p>Cheetabank FlashCash is a new semi-online payment system. FlashCash allows people with poor or infrequent Internet access to make payments easily.</p>
+      </div>
+      <div class="one-half column">
+        <img src="{{ url_for('static', filename='images/flashcash_full.png') }}" class="u-max-full-width" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section login-or-signup">
+  <div class="container">
+    <div class="row">
+      <h4>Ready to start?</h4>
+      <p><a class="button">Customers, learn more</a> <a class="button" href="{{ url_for('signup') }}">Shops, register now</a></p>
+      <p>Already registered? <a href="{{ url_for('login') }}">Click here to sign in</a>.</p>
+      <p class="section-description">Not convinced? Scroll down to read on <i class="fa fa-arrow-down"></i></p>
+    </div>
+  </div>
+</div>
+
+<div class="section for-customers">
+  <div class="container">
+    <div class="row">
+      <h4>FlashCash for customers</h4>
+      <p class="section-description">Worried about complicated online services? Bewildered with all the passwords you have to keep track of? Not any more. FlashCash is very easy and simple to use. It combines the speed and ease of access from the digital world with a security that only paper can afford.</p>
+      <a class="button">Learn More</a>
+    </div>
+  </div>
+</div>
+
+<div class="section customer-howto">
+  <div class="container">
+    <div class="row">
+      <div class="one-third column">
+        <i class="fa fa-circle-o-notch landing-large-icon"></i>
+        <h4>Zero registration.</h4>
+        <p>You don't have to create an account to make online payments! Anybody can make payments using with FlashCash</p>
+      </div>
+      <div class="one-third column">
+        <i class="fa fa-cart-plus landing-large-icon"></i>
+        <h4>Easy to get.</h4>
+        <p>It's easy to get FlashCash online-payable notes. Just ask for FlashCash at your nearest Cheetabank branch</p>
+      </div>
+      <div class="one-third column">
+        <i class="fa fa-send landing-large-icon"></i>
+        <h4>Easy to pay.</h4>
+        <p>Scratch the note to find its Unlock Code. Then just read out the Note ID and Unlock Code and give it to the person you want to pay!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section for-shops">
+  <div class="container">
+    <div class="row">
+      <h4>FlashCash for shops</h4>
+      <p class="section-description">Receiving FlashCash payments is easy if you have a CheetaCard Payment Portal. The FlashCash online dashboard has all the facilities you need for registering and tracking payments.</p>
+      <a class="button" href="{{ url_for('signup') }}">Register now</a>
+    </div>
+  </div>
+</div>
+
+<div class="section shops-howto">
+  <div class="container">
+    <div class="row">
+      <div class="one-half column">
+        <h5>How to register?</h5>
+        <p>To begin accepting FlashCash, you need to first have a <strong>Cheetabank account</strong> and a <strong>CheetaCard Payment Portal</strong>. You can ask your nearest Cheetabank Branch Manager to create these for you. Once you get your assigned portal-code, you can <a href="{{ url_for('signup') }}">create an account</a> and <a href="{{ url_for('add_portal') }}">register your Payment Portal</a> on your FlashCash dashboard to begin receiving payments.</p>
+      </div>
+      <div class="one-half column">
+        <h5>How do I receive payments?</h5>
+        <p>To receive payments, click on <strong>Claim Notes</strong> in your FlashCash dashboard. You will get a form to enter all your Note IDs and their Unlock Codes. On entering the correct codes, the notes will be automatically added to you FlashCash Payment Portal account. Money from your portal can later be transferred into your main Cheetabank account for you to withdraw.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section get-started-now">
+  <div class="container">
+    <div class="row">
+      <p class="section-description">Ready to enter the new age of SSS payment? <a href="{{ url_for('signup') }}" class="button">Create your account now!</a></p>
+    </div>
+  </div>
+</div>
 {% endblock %}

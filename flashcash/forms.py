@@ -15,4 +15,8 @@ class PortalShopForm(Form):
             message='Please enter a valid Cheetplaza Portal Code'),
         ])
     shop_name = TextField('Shop Name', validators=[Required()])
+
+class UsernamePasswordForm(Form):
+    username = TextField('Username')
+    password = PasswordField('Password')
     

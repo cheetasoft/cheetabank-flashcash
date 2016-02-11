@@ -15,8 +15,11 @@
       </thead>
       <tbody>
         {% for p in current_user.portals %}
-        <tr>
-          <td>{{ p.portal_code }}</td>
+        <tr{% if not p.confirmed %} style="color: red;" title="Portal is not yet confirmed. Please ask your branch manager to confirm this portal"{% endif %}>
+          <td>
+            {% if not p.confirmed %} <i class="fa fa-warning"></i>{% endif %}
+            {{ p.portal_code }}
+          </td>
           <td>{{ p.shop_name }}</td>
           <td>{{ p.balance }}</td>
           <td><a href="#">Do Something</a></td>

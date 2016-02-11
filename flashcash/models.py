@@ -25,6 +25,7 @@ class Portal(db.Model):
     shop_name = pw.CharField(max_length=32)
     owner = pw.ForeignKeyField(User, related_name='portals')
     balance = pw.DecimalField(decimal_places=2, default=0)
+    confirmed = pw.BooleanField(default=False)
 
     def __unicode__(self):
         return '%(portal_code)s - %(shop_name)s' % {

@@ -1,7 +1,10 @@
-.main {
-  border: 1px solid #7F7F7F;
-  padding: 10px;
-}
-.container {
-  max-width: 500px;
+/* Larger than phablet */
+@media (min-width: 550px) {
+  .main {
+    border: 1px solid #7F7F7F;
+    padding: 10px;
+  }
+  .container-main {
+    max-width: 550px;
+  }
 }

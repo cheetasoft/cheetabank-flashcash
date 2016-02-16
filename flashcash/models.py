@@ -53,3 +53,22 @@ class Note(db.Model):
             'note_id': self.note_id,
             'value': self.value
         }
+
+class Transaction(db.Model):
+    date = pw.DateTimeField()
+    portal = pw.ForeignKeyField(Portal)
+    amount = pw.DecimalField(decimal_places=2, default=0)
+    balance = pw.DecimalField(decimal_places=2, default=0) # Balance after transaction
+    @property
+    def notes(self):
+        return TransactionNote.select().where(TransactionNote.transaction == self)
+
+    def __unicode__(self):
+        return 'Transaction on %(date)s by %(portal)s' % {
+            'date': self.date,
+            'portal': self.portal.portal_code
+            }
+
+class TransactionNotes(db.Model):
+    note = pw.ForeignKeyField(Note)
+    transaction = pw.ForeignKeyField(Transaction)

@@ -1,7 +1,8 @@
 from flask import render_template, flash, request, url_for, redirect, abort
 from app import app
 from auth import login_manager, current_user, login_required
-from models import User, Branch, Note, Portal
+from models import db, User, Branch, Note, Portal, Transaction, TransactionNotes
+from datetime import datetime
 import forms
 from util.security import ts
 from util.email import send_email
@@ -83,3 +84,54 @@ def add_portal():
             flash('Please ask your Branch Manager to confirm your portal code before you begin using it.')
             return redirect(url_for('dash_portals'))
     return render_template('portals/add.htm', form=form)
+
+@app.route('/dashboard/notes/add/', methods=['GET', 'POST'])
+@login_required
+def claim_notes():
+    form = forms.PortalNotesForm()
+    portal_choices = [(p.portal_code, '%s (%s)' % (p.shop_name, p.portal_code)) for p in current_user.portals]
+    form.portal.choices = portal_choices
+    if form.validate_on_submit():
+        notes_to_add = []
+        total_sum = 0
+        errors = False
+        try:
+            portal = Portal.get(portal_code=form.portal.data, owner=current_user.username)
+        except Portal.DoesNotExist:
+            if not form.portal.errors: form.portal.errors = []
+            form.portal.errors.append('You are not authorized to use that Portal')
+            errors = True
+
+        for note in form.notes:
+            if not (note.note_id.data or note.unlock_code.data): continue
+            try:
+                n = Note.get(note_id=note.note_id.data, unlock_code=note.unlock_code.data)
+                print n
+                if n.claimer is not None:
+                    if not form.errors.has_key(note.name): form.errors[note.name] = []
+                    form.errors[note.name].append('This note has already been claimed')
+                    errors = True
+                    continue
+                # All fine; add notes to list
+                notes_to_add.append(n)
+                total_sum += n.value
+            except Note.DoesNotExist:
+                if not form.errors.has_key(note.name): form.errors[note.name] = []
+                form.errors[note.name].append('Invalid Note ID or Unlock Code')
+                errors = True
+                continue
+        if not errors:
+            with db.database.atomic():
+                # Create transaction
+                t = Transaction()
+                t.date = datetime.now()
+                t.portal = portal
+                t.amount = total_sum
+                t.save()
+                for n in notes_to_add:
+                    n.claimer = current_user.username
+                    n.save()
+                    TransactionNotes.create(transaction=t, note=n)
+            flash('%d SSS has been successfully added to your account' % t.amount)
+            return redirect(url_for('dashboard'))
+    return render_template('notes/add.htm', form=form)

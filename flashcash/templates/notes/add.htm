@@ -1,0 +1,64 @@
+{% extends 'dashboard.htm' %}
+{% block title %}Claim FlashCash notes{% endblock %}
+{% block dash_content %}
+
+<div class="row">
+  <div class="twelve columns">
+    <h4>Register Payment Portal</h4>
+    <form action="{{ url_for('claim_notes') }}" method="post">
+      {% if form.errors.portal %}
+      <ul class="errors">
+      {% for error in form.errors.portal %}
+        <li>{{ error }}</li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+      {{ form.csrf_token }}
+      <div class="twelve columns">
+        {{ form.portal.label }}
+        {{ form.portal }}
+      </div>
+      <div class="twelve columns">
+        <table class="u-full-width">
+          <thead>
+            <tr>
+              <th>Note ID</th>
+              <th>Unlock Code</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for note in form.notes %}
+              <tr>
+                <td>
+                  {% if form.errors.has_key(note.name) %}
+                    {% for error in form.errors[note.name] %}
+                      <label class="form-error">{{ error }}</label>
+                    {% endfor %}
+                  {% endif %}
+                  {% if note.note_id.errors %}
+                    {% for error in note.note_id.errors %}
+                    <label class="form-error">{{ error }}</label>
+                    {% endfor %}
+                  {% endif %}
+                  {{ note.note_id(placeholder='Note ID', class='u-full-width') }}
+                </td>
+                <td>
+                  {% if note.unlock_code.errors %}
+                    {% for error in note.unlock_code.errors %}
+                    <label class="form-error">{{ error }}</label>
+                    {% endfor %}
+                  {% endif %}
+                  {{ note.unlock_code(placeholder='Unlock Code', class='u-full-width') }}
+                  {{ note.csrf_token }}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <input type="submit" value="Claim Notes" />
+    </form>
+  </div>
+</div>
+
+{% endblock %}

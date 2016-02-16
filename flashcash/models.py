@@ -34,11 +34,11 @@ class Portal(db.Model):
         }
 
 class Branch(db.Model):
-    id = pw.CharField(max_length=6, primary_key=True)
+    branch_id = pw.CharField(max_length=6)
     name = pw.CharField(max_length=32)
     def __unicode__(self):
         return '%(id)s - %(name)s' % {
-            'id': self.id,
+            'id': self.branch_id,
             'name': self.name
         }
 

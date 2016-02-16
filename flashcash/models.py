@@ -44,7 +44,7 @@ class Branch(db.Model):
 
 class Note(db.Model):
     note_id = pw.CharField(max_length=6)
-    passcode = pw.CharField(max_length=6)
+    unlock_code = pw.CharField(max_length=6)
     branch = pw.ForeignKeyField(Branch)
     value = pw.DecimalField(decimal_places=2, default=0)
     claimer = pw.ForeignKeyField(User, null=True)

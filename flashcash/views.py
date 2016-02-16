@@ -96,7 +96,7 @@ def claim_notes():
         total_sum = 0
         errors = False
         try:
-            portal = Portal.get(portal_code=form.portal.data, owner=current_user.username)
+            portal = Portal.get(portal_code=form.portal.data, owner=current_user.username, confirmed=True)
         except Portal.DoesNotExist:
             if not form.portal.errors: form.portal.errors = []
             form.portal.errors.append('You are not authorized to use that Portal')

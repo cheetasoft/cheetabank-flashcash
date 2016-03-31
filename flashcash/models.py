@@ -8,12 +8,30 @@ GENDER_CHOICES = (
     ('?', 'Unknown')
     )
 
+class Branch(db.Model):
+    branch_id = pw.CharField(max_length=6)
+    name = pw.CharField(max_length=32)
+    def __unicode__(self):
+        return '%(id)s - %(name)s' % {
+            'id': self.branch_id,
+            'name': self.name
+        }
+
 class User(db.Model, UserMixin):
     name = pw.CharField()
     username = pw.CharField(max_length=32, primary_key=True)
     password = pw.CharField(max_length=128)
     email = pw.CharField(null=True)
     email_confirmed = pw.BooleanField(default=False)
+    is_admin = pw.BooleanField(default=False)
+    manager_of = pw.ForeignKeyField(Branch, null=True)
+
+    @property
+    def roles(self):
+        roles = []
+        if self.is_admin: roles.append('admin')
+        if self.manager_of is not None: roles.append('manager')
+        return roles
     def __unicode__(self):
         return '%(username)s - %(name)s' % {
             'name': self.name,
@@ -31,15 +49,6 @@ class Portal(db.Model):
         return '%(portal_code)s - %(shop_name)s' % {
             'portal_code': self.portal_code,
             'shop_name': self.shop_name
-        }
-
-class Branch(db.Model):
-    branch_id = pw.CharField(max_length=6)
-    name = pw.CharField(max_length=32)
-    def __unicode__(self):
-        return '%(id)s - %(name)s' % {
-            'id': self.branch_id,
-            'name': self.name
         }
 
 class Note(db.Model):

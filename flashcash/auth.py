@@ -4,11 +4,14 @@ from flask_login import LoginManager, login_user, logout_user, current_user, log
 import wtforms as wtf
 from flask_wtf import Form
 from flask import render_template, redirect, url_for, request, flash
+from flask.ext.principal import Principal, Permission, RoleNeed, UserNeed, Identity, AnonymousIdentity, identity_changed, identity_loaded
 from forms import UsernamePasswordForm
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+principals = Principal(app)
 
 @login_manager.user_loader
 def load_user(username):
@@ -17,6 +20,23 @@ def load_user(username):
     except User.DoesNotExist:
         return None
     return user
+
+# Setup principals
+
+@identity_loaded.connect_via(app)
+def on_identity_loaded(sender, identity):
+    # Set the identity user object
+    identity.user = current_user
+
+    # Add the UserNeed to the identity
+    if hasattr(current_user, 'id'):
+	identity.provides.add(UserNeed(current_user.id))
+
+    # Add roles
+    if hasattr(current_user, 'roles'):
+	for role in current_user.roles:
+	    identity.provides.add(RoleNeed(role))
+
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():

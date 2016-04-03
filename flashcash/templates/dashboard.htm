@@ -3,14 +3,17 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 <div class="row">
-  <div class="nine columns">
+  <div class="ten columns">
     <h4>
       <i class="fa fa-user"></i>
       {{ current_user.name }}
     </h4>
   </div>
-  <div class="three columns">
-    <a class="button pull-right" href="{{ url_for('logout') }}">
+  <div class="two columns">
+    <a href="{{ url_for('dashboard') }}" alt="Dashboard">
+      <i class="fa fa-home fa-2x"></i>
+    </a>
+    <a href="{{ url_for('logout') }}" alt="Logout">
       <i class="fa fa-sign-out fa-2x"></i>
     </a>
   </div>

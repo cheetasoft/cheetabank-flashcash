@@ -31,8 +31,7 @@ class PortalNotesForm(Form):
 class ValueCountForm(Form):
     value = DecimalField('Value of each note',
         places=1,
-        default=5.0,
-        validators=[Required()])
+        default=5.0)
     count = IntegerField('Number of notes',
         default=6,
         validators=[Required(), NumberRange(min=0, max=20)])

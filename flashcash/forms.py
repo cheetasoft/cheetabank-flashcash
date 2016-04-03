@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, PasswordField, SelectField, FormField, FieldList
-from wtforms.validators import Required, Email, Length
+from wtforms import TextField, PasswordField, SelectField, FormField, FieldList, IntegerField, DecimalField
+from wtforms.validators import Required, Email, Length, NumberRange
 
 class NameEmailUsernamePasswordForm(Form):
     name = TextField('Real Name', validators=[Required()])
@@ -27,4 +27,13 @@ class NoteUnlockForm(Form):
 class PortalNotesForm(Form):
     portal = SelectField('Portal', validators=[Required()])
     notes = FieldList(FormField(NoteUnlockForm, 'Note'), min_entries=4, max_entries=24)
+
+class ValueCountForm(Form):
+    value = DecimalField('Value of each note',
+        places=1,
+        default=5.0,
+        validators=[Required()])
+    count = IntegerField('Number of notes',
+        default=6,
+        validators=[Required(), NumberRange(min=0, max=20)])
     

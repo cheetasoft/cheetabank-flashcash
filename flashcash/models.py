@@ -52,11 +52,12 @@ class Portal(db.Model):
         }
 
 class Note(db.Model):
-    note_id = pw.CharField(max_length=6)
+    note_id = pw.CharField(max_length=6, unique=True)
     unlock_code = pw.CharField(max_length=6)
     branch = pw.ForeignKeyField(Branch)
     value = pw.DecimalField(decimal_places=2, default=0)
     claimer = pw.ForeignKeyField(User, null=True)
+    printed = pw.BooleanField(default=False)
     def __unicode__(self):
         return '%(note_id)s - %(value)d SSS' % {
             'note_id': self.note_id,

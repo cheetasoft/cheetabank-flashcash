@@ -3,7 +3,7 @@ from .models import User
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 import wtforms as wtf
 from flask_wtf import Form
-from flask import render_template, redirect, url_for, request, flash
+from flask import render_template, redirect, url_for, request, flash, current_app, session
 from flask.ext.principal import Principal, Permission, RoleNeed, UserNeed, Identity, AnonymousIdentity, identity_changed, identity_loaded
 from .forms import UsernamePasswordForm
 
@@ -30,13 +30,12 @@ def on_identity_loaded(sender, identity):
 
     # Add the UserNeed to the identity
     if hasattr(current_user, 'id'):
-	identity.provides.add(UserNeed(current_user.id))
+        identity.provides.add(UserNeed(current_user.id))
 
     # Add roles
     if hasattr(current_user, 'roles'):
-	for role in current_user.roles:
-	    identity.provides.add(RoleNeed(role))
-
+        for role in current_user.roles:
+            identity.provides.add(RoleNeed(role))
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -54,16 +53,29 @@ def login():
             else:
                 form.errors['password'] = [msg]
         else:
-		    # All OK. Log in the user.
-	        login_user(user)
-	
-	        return redirect(request.args.get('next') or url_for('dashboard'))
-	# Default to returning login page        
+                    # All OK. Log in the user.
+                login_user(user)
+                # Inform Principal of changed identity
+                identity_changed.send(
+                    current_app._get_current_object(),
+                    identity=Identity(str(user.id)))
+        
+                return redirect(request.args.get('next') or url_for('dashboard'))
+        # Default to returning login page        
     return render_template('login.htm', form=form)
 
 @app.route('/logout/')
 def logout():
     logout_user()
     flash('You are now logged out.')
+
+    # Remove session keys set by Flask-Principal
+    for key in ('identity.name', 'identity.auth_type'):
+        session.pop(key, None)
+
+    # Tell Flask-Principal the user is anonymous
+    identity_changed.send(
+        current_app._get_current_object(),
+        identity=AnonymousIdentity())
     
     return redirect(request.args.get('next') or url_for('login'))

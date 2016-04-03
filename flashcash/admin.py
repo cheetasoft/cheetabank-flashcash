@@ -1,4 +1,6 @@
 from flask.ext.admin import Admin, BaseView, expose
+from flask.ext.admin.actions import action
+from flask.ext.admin.babel import gettext, ngettext
 from flask_admin.contrib.peewee import ModelView
 
 from .app import app, db
@@ -23,7 +25,30 @@ admin = Admin(app, template_mode='bootstrap3')
 admin.add_view(AdminModelView(User, name='Users'))
 admin.add_view(AdminModelView(Portal, name='Payment Portals'))
 admin.add_view(AdminModelView(Branch, name='Branches'))
-admin.add_view(ManagerModelView(Note, name='Notes'))
+
+class ModelNoteView(ManagerModelView):
+    @action('mark_printed', 'Mark as printed', 'Are you sure you want to mark the selected notes as printed?')
+    def action_approve(self, ids):
+        try:
+            query = Note.select().where(Note.id << ids)
+            count = 0
+            for note in query:
+                if not note.printed:
+                    note.printed = True
+                    note.save()
+                    count += 1
+
+            flash(ngettext('Note was successfully marked printed.',
+                           '%(count)s notes were successfully marked as printed.',
+                           count,
+                           count=count))
+        except Exception as ex:
+            if not self.handle_view_exception(ex):
+                raise
+
+            flash(gettext('Failed to mark notes as printed. %(error)s', error=str(ex)), 'error')
+
+admin.add_view(ModelNoteView(Note, name='Notes'))
 
 class GenerateNotesView(BaseView):
     def is_accessible(self):

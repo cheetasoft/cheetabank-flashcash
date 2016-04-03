@@ -1,4 +1,4 @@
-from app import app
+from ..app import app
 def send_email(email, subject, message):
     if app.config['DEBUG']:
         print '==== Sending new email ===='

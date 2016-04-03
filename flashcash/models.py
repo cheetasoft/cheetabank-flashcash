@@ -1,5 +1,5 @@
 from flask_login import UserMixin
-from app import db
+from .app import db
 import peewee as pw
 
 GENDER_CHOICES = (

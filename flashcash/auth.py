@@ -1,11 +1,11 @@
-from app import app, db
-from models import User
+from .app import app, db
+from .models import User
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 import wtforms as wtf
 from flask_wtf import Form
 from flask import render_template, redirect, url_for, request, flash
 from flask.ext.principal import Principal, Permission, RoleNeed, UserNeed, Identity, AnonymousIdentity, identity_changed, identity_loaded
-from forms import UsernamePasswordForm
+from .forms import UsernamePasswordForm
 
 login_manager = LoginManager()
 login_manager.init_app(app)

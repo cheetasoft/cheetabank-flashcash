@@ -1,9 +1,9 @@
 from flask_admin import Admin
 from flask_admin.contrib.peewee import ModelView
 
-from app import app, db
-from auth import Permission, RoleNeed
-from models import User, Branch, Note, Portal
+from .app import app, db
+from .auth import Permission, RoleNeed
+from .models import User, Branch, Note, Portal
 
 manager_permission = Permission(RoleNeed('manager'))
 admin_permission = Permission(RoleNeed('admin'))

@@ -11,6 +11,10 @@ from util.email import send_email
 def index():
     return render_template('index.htm')
 
+@app.route('/about/')
+def about():
+    return render_template('about.htm')
+
 @app.route('/dashboard/')
 @login_required
 def dashboard():

@@ -76,7 +76,7 @@
   <div class="container">
     <div class="row">
       <h4>Ready to start?</h4>
-      <p><a class="button">Customers, learn more</a> <a class="button" href="{{ url_for('signup') }}">Shops, register now</a></p>
+      <p><a class="button" href="{{ url_for('about') }}">Customers, learn more</a> <a class="button" href="{{ url_for('signup') }}">Shops, register now</a></p>
       <p>Already registered? <a href="{{ url_for('login') }}">Click here to sign in</a>.</p>
       <p class="section-description">Not convinced? Scroll down to read on <i class="fa fa-arrow-down"></i></p>
     </div>
@@ -88,7 +88,7 @@
     <div class="row">
       <h4>FlashCash for customers</h4>
       <p class="section-description">Worried about complicated online services? Bewildered with all the passwords you have to keep track of? Not any more. FlashCash is very easy and simple to use. It combines the speed and ease of access from the digital world with a security that only paper can afford.</p>
-      <a class="button">Learn More</a>
+      <a class="button" href="{{ url_for('about') }}">Learn More</a>
     </div>
   </div>
 </div>
@@ -111,6 +111,9 @@
         <h4>Easy to pay.</h4>
         <p>Scratch the note to find its Unlock Code. Then just read out the Note ID and Unlock Code and give it to the person you want to pay!</p>
       </div>
+    </div>
+    <div class="row">
+      <a class="button" href="{{ url_for('about') }}">Find out more</a>
     </div>
   </div>
 </div>

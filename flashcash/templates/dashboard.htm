@@ -31,6 +31,7 @@
     <div class="twelve columns">
       {{ dash_button('dot-circle-o', 'Manage portals', 'dash_portals') }}
       {{ dash_button('plus', 'Claim Notes', 'claim_notes') }}
+      {%- if current_user.is_admin %}{{ dash_button('gear', 'Admin', 'admin.index') }}{% endif %}
     </div>
   </div>
   {% endblock %}

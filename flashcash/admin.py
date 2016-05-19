@@ -27,6 +27,8 @@ admin.add_view(AdminModelView(Portal, name='Payment Portals'))
 admin.add_view(AdminModelView(Branch, name='Branches'))
 
 class ModelNoteView(ManagerModelView):
+    list_template = 'admin/models/notes/list.htm'
+
     @action('mark_printed', 'Mark as printed', 'Are you sure you want to mark the selected notes as printed?')
     def action_approve(self, ids):
         try:

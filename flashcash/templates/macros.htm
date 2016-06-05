@@ -4,3 +4,15 @@
   <i class="fa fa-{{ icon }} fa-stack-1x fa-inverse"></i>
 </a>
 {% endmacro %}
+
+{% macro field_with_errors(field) -%}
+{{ field.label }}
+{% if field.errors -%}
+<ul class="errors">
+  {% for error in field.errors -%}
+  <li>{{ error }}</li>
+  {%- endfor %}
+</ul>
+{%- endif %}
+{{ field }}
+{% endmacro %}

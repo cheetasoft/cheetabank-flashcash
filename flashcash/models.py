@@ -1,6 +1,9 @@
 from flask_login import UserMixin
 from .app import db
 import peewee as pw
+from playhouse import hybrid
+from werkzeug.security import check_password_hash, generate_password_hash
+import warnings
 
 GENDER_CHOICES = (
     ('M', 'Male'),
@@ -20,7 +23,7 @@ class Branch(db.Model):
 class User(db.Model, UserMixin):
     name = pw.CharField()
     username = pw.CharField(max_length=32, primary_key=True)
-    password = pw.CharField(max_length=128)
+    _password = pw.CharField(max_length=128, db_column='password')
     email = pw.CharField(null=True)
     email_confirmed = pw.BooleanField(default=False)
     is_admin = pw.BooleanField(default=False)
@@ -32,6 +35,26 @@ class User(db.Model, UserMixin):
         if self.is_admin: roles.append('admin')
         if self.manager_of is not None: roles.append('manager')
         return roles
+
+    @hybrid.hybrid_property
+    def password(self):
+        return self._password
+
+    @password.setter
+    def _set_password(self, plaintext):
+        self._password = generate_password_hash(plaintext)
+
+    def check_password(self, plaintext):
+        # Handle plaintext passwords
+        password = self._password
+        if self._password.count('$') < 2:
+            warnings.warn('Plaintext password detected! Please update ASAP')
+            password = 'plain$$%s' % password
+
+        if check_password_hash(password, plaintext):
+            return True
+        return False
+
     def __unicode__(self):
         return '%(username)s - %(name)s' % {
             'name': self.name,

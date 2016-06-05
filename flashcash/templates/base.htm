@@ -46,6 +46,9 @@
     </div>
     <div class="row">
       <div class="twelve columns main">
+        {% for message in get_flashed_messages() -%}
+          <div class="notification">{{ message }}</div>
+        {%- endfor %}
         {% block content %}
         {% endblock %}
       </div>

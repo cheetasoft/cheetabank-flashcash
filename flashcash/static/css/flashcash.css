@@ -8,3 +8,9 @@
     max-width: 550px;
   }
 }
+
+.notification {
+  background-color: orange;
+  padding: 1rem;
+  border-radius: 0.6em;
+}

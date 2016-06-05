@@ -4,14 +4,14 @@
 {% block content %}
 <div class="row">
   <div class="ten columns">
-    <h4>
-      <i class="fa fa-user"></i>
-      {{ current_user.name }}
-    </h4>
-  </div>
-  <div class="two columns">
     <a href="{{ url_for('dashboard') }}" alt="Dashboard">
       <i class="fa fa-home fa-2x"></i>
+    </a>
+    {{ current_user.name }}
+  </div>
+  <div class="two columns" style="item-align: right;">
+    <a href="{{ url_for('edit_profile') }}" alt="Profile">
+      <i class="fa fa-user fa-2x"></i>
     </a>
     <a href="{{ url_for('logout') }}" alt="Logout">
       <i class="fa fa-sign-out fa-2x"></i>

@@ -21,8 +21,11 @@ class AdminModelView(ModelView):
     def is_accessible(self):
         return admin_permission.can()
 
+class ModelUserView(AdminModelView):
+    column_list = ('username', 'name', 'manager_of', 'email', 'email_confirmed', 'is_admin')
+
 admin = Admin(app, template_mode='bootstrap3')
-admin.add_view(AdminModelView(User, name='Users'))
+admin.add_view(ModelUserView(User, name='Users'))
 admin.add_view(AdminModelView(Portal, name='Payment Portals'))
 admin.add_view(AdminModelView(Branch, name='Branches'))
 

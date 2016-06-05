@@ -1,0 +1,29 @@
+{% extends 'dashboard.htm' %}
+{% from 'macros.htm' import field_with_errors %}
+{% block title %}Edit Profile - FlashCash{% endblock %}
+{% block dash_content %}
+
+<div class="row">
+  <div class="twelve columns">
+    <h4>Edit Profile</h4>
+    <form action="{{ url_for('edit_profile') }}" method="post">
+      {% if form.errors.portal %}
+      <ul class="errors">
+      {% for error in form.errors.portal %}
+        <li>{{ error }}</li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+      {{ form.csrf_token }}
+      <div class="twelve columns">
+        {{ field_with_errors(form.name) }}
+      </div>
+      <div class="twelve columns">
+        {{ field_with_errors(form.email) }}
+      </div>
+      <input type="submit" value="Save Changes" />
+    </form>
+  </div>
+</div>
+
+{% endblock %}

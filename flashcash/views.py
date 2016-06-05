@@ -139,3 +139,20 @@ def claim_notes():
             flash('%d SSS has been successfully added to your account' % t.amount)
             return redirect(url_for('dashboard'))
     return render_template('notes/add.htm', form=form)
+
+@app.route('/dashboard/profile/', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = forms.NameEmailForm(obj=current_user)
+    if form.validate_on_submit():
+        current_user.name = form.name.data
+        if current_user.email != form.email.data:
+            current_user.email = form.email.data
+            email_changed = True
+        else:
+            email_changed = False
+        current_user.save()
+        flash('Your changes have been saved.')
+        if email_changed:
+            flash('Please check your inbox to confirm your new email address.')
+    return render_template('accounts/edit.htm', form=form)

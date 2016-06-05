@@ -2,6 +2,10 @@ from flask.ext.wtf import Form
 from wtforms import TextField, PasswordField, SelectField, FormField, FieldList, IntegerField, DecimalField
 from wtforms.validators import Required, Email, Length, NumberRange
 
+class NameEmailForm(Form):
+    name = TextField('Full Name', validators=[Required()])
+    email = TextField('Email', validators=[Required(), Email()])
+
 class NameEmailUsernamePasswordForm(Form):
     name = TextField('Real Name', validators=[Required()])
     email = TextField('Email', validators=[Required(), Email()])

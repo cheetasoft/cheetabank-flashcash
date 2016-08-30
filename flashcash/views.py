@@ -61,8 +61,9 @@ def confirm_email(token):
 
     u.email_confirmed = True
     u.save()
+    flash('Your email address has been confirmed!')
 
-    return redirect(url_for('login'))
+    return redirect(url_for('dashboard'))
 
 @app.route('/dashboard/portals/')
 @login_required

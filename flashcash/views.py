@@ -46,7 +46,8 @@ def signup():
                 token = token,
                 _external=True)
             html = render_template('email/activate.htm', name=u.name, confirm_url=confirm_url)
-            send_email(u.email, subject, html)
+            text = render_template('email/activate.txt', name=u.name, confirm_url=confirm_url)
+            send_email(u.email, subject, text, html)
 
             return redirect(url_for('index'))
     return render_template('accounts/signup.htm', form=form)

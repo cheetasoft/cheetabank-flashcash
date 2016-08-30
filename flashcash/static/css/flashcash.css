@@ -3,9 +3,40 @@ body {
 }
 
 .notification {
-  background-color: orange;
+  background-color: #FFCE74;
   padding: 1rem;
-  border-radius: 0.6em;
+  border-radius: 0.6em 0.6em 0 0;
+}
+
+.dash-button {
+  text-align: left;
+  height: auto;
+  padding: 5px;
+}
+
+.dash-button .dash-button-title {
+  font-size: 150%;
+}
+
+.dash-menubar {
+  margin: 0 0 10px 0;
+  padding: 10px;
+  color: white;
+  background-color: black;
+}
+
+.dash-menubar a {
+  color: #FFEABB;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.dash-menubar a:hover {
+  color: #FFCE74;
+}
+
+.desktop-only {
+  display: none;
 }
 
 /* Larger than phablet */
@@ -26,5 +57,8 @@ body {
   }
   .logo-main {
     padding: 10px;
+  }
+  .desktop-only {
+    display: inherit;
   }
 }

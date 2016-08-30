@@ -1,8 +1,12 @@
 {% macro dash_button(icon, title, page=None) %}
-<a href="{% if page %}{{ url_for(page) }}{% else %}# {% endif %}" title="{{ title }}" class="fa-stack fa-3x dash_button">
-  <i class="fa fa-circle fa-stack-2x"></i>
-  <i class="fa fa-{{ icon }} fa-stack-1x fa-inverse"></i>
+<a href="{% if page %}{{ url_for(page) }}{% else %}# {% endif %}" title="{{ title }}" class="button u-full-width dash-button">
+  <span class="fa-stack fa-3x">
+    <i class="fa fa-circle fa-stack-2x"></i>
+    <i class="fa fa-{{ icon }} fa-stack-1x fa-inverse"></i>
+  </span>
+  <span class="dash-button-title">{{ title }}</span>
 </a>
+
 {% endmacro %}
 
 {% macro field_with_errors(field) -%}

@@ -40,7 +40,9 @@
     <div class="row">
       <div class="twelve columns">
         {% block heading %}
+        <a href="{{ url_for('dashboard') }}">
         <h1><img src="{{ url_for('static', filename='images/flashcash_full.png') }}" alt="FlashCash" class="u-full-width logo-main" /></h1>
+        </a>
         {% endblock %}
       </div>
     </div>

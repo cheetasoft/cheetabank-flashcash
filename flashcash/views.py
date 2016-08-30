@@ -150,11 +150,21 @@ def edit_profile():
         current_user.name = form.name.data
         if current_user.email != form.email.data:
             current_user.email = form.email.data
+            current_user.email_confirmed = False
             email_changed = True
         else:
             email_changed = False
         current_user.save()
         flash('Your changes have been saved.')
         if email_changed:
+            # Send email
+            subject = 'Confirm your new email address'
+            token = ts.dumps(current_user.email, salt='email-confirm-key')
+            confirm_url = url_for('confirm_email',
+                token = token,
+                _external=True)
+            text = render_template('email/confirm_email.txt', name=current_user.name, confirm_url=confirm_url)
+            html = render_template('email/confirm_email.htm', name=current_user.name, confirm_url=confirm_url)
+            send_email(current_user.email, subject, text, html)
             flash('Please check your inbox to confirm your new email address.')
     return render_template('accounts/edit.htm', form=form)

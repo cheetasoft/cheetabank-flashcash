@@ -1,0 +1,9 @@
+Hello, {{ name }}!
+
+It seems that you recently updated your email address. Please click
+on the link below to sign in and confirm your new email:
+
+{{ confirm_url }}
+
+--
+Questions? Email cheetabank@sssnet.tk for help and information.

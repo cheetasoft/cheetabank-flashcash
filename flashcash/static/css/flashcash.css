@@ -1,16 +1,30 @@
-/* Larger than phablet */
-@media (min-width: 550px) {
-  .main {
-    border: 1px solid #7F7F7F;
-    padding: 10px;
-  }
-  .container-main {
-    max-width: 550px;
-  }
+body {
+  margin-top: 10%;
 }
 
 .notification {
   background-color: orange;
   padding: 1rem;
   border-radius: 0.6em;
+}
+
+/* Larger than phablet */
+@media (min-width: 550px) {
+  body {
+    background-color: #BFBFBF;
+    margin-top: 10em;
+  }
+  .main {
+    padding: 10px;
+  }
+  .container-main {
+    max-width: 550px;
+    background-color: white;
+    border-width: 1px 5px 5px 1px;
+    border-style: solid;
+    border-color: #7F7F7F;
+  }
+  .logo-main {
+    padding: 10px;
+  }
 }

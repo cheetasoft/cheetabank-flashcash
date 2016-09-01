@@ -49,7 +49,7 @@ def signup():
             text = render_template('email/activate.txt', name=u.name, confirm_url=confirm_url)
             send_email(u.email, subject, text, html)
 
-            return redirect(url_for('index'))
+            return redirect(url_for('dashboard'))
     return render_template('accounts/signup.htm', form=form)
 
 @app.route('/confirm/<token>')

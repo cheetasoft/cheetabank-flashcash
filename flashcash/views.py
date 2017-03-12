@@ -4,8 +4,8 @@ from .auth import login_manager, current_user, login_required
 from .models import db, User, Branch, Note, Portal, Transaction, TransactionNotes
 from datetime import datetime
 from . import forms
-from util.security import ts
-from util.email import send_email
+from .util.security import ts
+from .util.email import send_email
 
 @app.route('/')
 def index():

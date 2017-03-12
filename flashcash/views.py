@@ -112,7 +112,6 @@ def claim_notes():
             if not (note.note_id.data or note.unlock_code.data): continue
             try:
                 n = Note.get(note_id=note.note_id.data, unlock_code=note.unlock_code.data)
-                print n
                 if n.claimer is not None:
                     if not form.errors.has_key(note.name): form.errors[note.name] = []
                     form.errors[note.name].append('This note has already been claimed')

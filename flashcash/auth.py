@@ -47,11 +47,7 @@ def login():
         # Login and validate the user.
         user = load_user(form.username.data)
         if (not user) or (user.check_password and not user.check_password(form.password.data)):
-            msg = 'Invalid username or password'
-            if form.errors.has_key('password'):
-                form.errors['password'].append(msg)
-            else:
-                form.errors['password'] = [msg]
+            flash('Invalid username or password')
         else:
                     # All OK. Log in the user.
                 login_user(user)

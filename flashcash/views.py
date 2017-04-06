@@ -1,6 +1,7 @@
 from flask import render_template, flash, request, url_for, redirect, abort
 from .app import app
 from .auth import login_manager, current_user, login_required
+from .admin import admin_permission, manager_permission
 from .models import db, User, Branch, Note, Portal, Transaction, TransactionNotes
 from datetime import datetime
 from . import forms
@@ -18,7 +19,9 @@ def about():
 @app.route('/dashboard/')
 @login_required
 def dashboard():
-    return render_template('dashboard.htm')
+    # Allow admins and managers to access admin page
+    allow_admin = admin_permission.can() or manager_permission.can()
+    return render_template('dashboard.htm', allow_admin=allow_admin)
 
 @app.route('/signup/', methods=['GET','POST'])
 def signup():

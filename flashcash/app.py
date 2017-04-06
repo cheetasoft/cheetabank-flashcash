@@ -1,6 +1,9 @@
 from flask import Flask
 from flask.ext.peewee.db import Database
 from flask.ext.mail import Mail
+import logging
+from logging.handlers import RotatingFileHandler
+
 
 app = Flask(__name__)
 try:
@@ -11,3 +14,8 @@ except:
 
 db = Database(app)
 mail = Mail(app)
+
+if app.config.has_key('LOG_FILE'):
+    handler = RotatingFileHandler(app.config.get('LOG_FILE'), maxBytes=10000, backupCount=1)
+    handler.setLevel(logging.ERROR)
+    app.logger.addHandler(handler)

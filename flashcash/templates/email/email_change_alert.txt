@@ -1,0 +1,13 @@
+Hello, {{ name }}!
+
+Your FlashCash account's email address has been changed to
+{{ new_email }}.
+
+If you requested this change, please check your {{ new_email }}
+inbox for the email verification link.
+
+If you did not request an email change, please contact your branch
+manager immediately, as your account could have been hacked.
+
+--
+Questions? Email cheetabank@sssnet.tk for help and information.

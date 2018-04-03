@@ -151,6 +151,7 @@ def edit_profile():
     if form.validate_on_submit():
         current_user.name = form.name.data
         if current_user.email != form.email.data:
+            old_email = current_user.email
             current_user.email = form.email.data
             current_user.email_confirmed = False
             email_changed = True
@@ -169,4 +170,15 @@ def edit_profile():
             html = render_template('email/confirm_email.htm', name=current_user.name, confirm_url=confirm_url)
             send_email(current_user.email, subject, text, html)
             flash('Please check your inbox to confirm your new email address.')
+
+            # Send notification to old email
+            subject = 'Alert: Email address changed'
+            text = render_template('email/email_change_alert.txt',
+                name=current_user.name,
+                new_email=current_user.email)
+            html = render_template('email/email_change_alert.htm',
+                name=current_user.name,
+                new_email=current_user.email)
+            send_email(old_email, subject, text, html)
+
     return render_template('accounts/edit.htm', form=form)

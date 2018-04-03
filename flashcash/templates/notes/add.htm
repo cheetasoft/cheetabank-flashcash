@@ -30,7 +30,7 @@
             {% for note in form.notes %}
               <tr>
                 <td>
-                  {% if form.errors.has_key(note.name) %}
+                  {% if note.name in form.errors %}
                     {% for error in form.errors[note.name] %}
                       <label class="form-error">{{ error }}</label>
                     {% endfor %}

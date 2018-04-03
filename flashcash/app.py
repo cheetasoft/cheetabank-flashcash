@@ -15,7 +15,7 @@ except:
 db = Database(app)
 mail = Mail(app)
 
-if app.config.has_key('LOG_FILE'):
+if 'LOG_FILE' in app.config:
     handler = RotatingFileHandler(app.config.get('LOG_FILE'), maxBytes=10000, backupCount=1)
     handler.setLevel(logging.ERROR)
     app.logger.addHandler(handler)

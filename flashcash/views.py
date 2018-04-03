@@ -30,7 +30,7 @@ def signup():
         # Check for existing username
         if User.select().where(User.username == form.data['username']).exists():
             msg = 'Username already exists! Please try a different one'
-            if form.errors.has_key('username'):
+            if 'username' in form.errors:
                 form.errors['username'].append(msg)
             else:
                 form.errors['username'] = [msg]
@@ -81,7 +81,7 @@ def add_portal():
     if form.validate_on_submit():
         if Portal.select().where(Portal.portal_code == form.data['portal_code']).exists():
             msg = 'Somebody has already tried to register that portal-code'
-            if form.errors.has_key('portal_code'):
+            if 'portal_code' in form.errors:
                 form.errors['portal_code'].append(msg)
             else:
                 form.errors['portal_code'] = [msg]
@@ -116,7 +116,7 @@ def claim_notes():
             try:
                 n = Note.get(note_id=note.note_id.data, unlock_code=note.unlock_code.data)
                 if n.claimer is not None:
-                    if not form.errors.has_key(note.name): form.errors[note.name] = []
+                    if not note.name in form.errors: form.errors[note.name] = []
                     form.errors[note.name].append('This note has already been claimed')
                     errors = True
                     continue
@@ -124,7 +124,7 @@ def claim_notes():
                 notes_to_add.append(n)
                 total_sum += n.value
             except Note.DoesNotExist:
-                if not form.errors.has_key(note.name): form.errors[note.name] = []
+                if not note.name in form.errors: form.errors[note.name] = []
                 form.errors[note.name].append('Invalid Note ID or Unlock Code')
                 errors = True
                 continue

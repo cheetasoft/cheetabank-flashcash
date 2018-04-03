@@ -1,6 +1,8 @@
 from ..app import app, mail
 from flask.ext.mail import Message
-def send_email(email, subject, text, html):
+def send_email(email, subject, text, html=''):
+    if html == '':
+        html = text
     if app.config['DEBUG']:
         app.logger.debug('==== Sending new email ====')
         app.logger.debug('To: %s' % email)
@@ -10,7 +12,7 @@ def send_email(email, subject, text, html):
         app.logger.debug('\n======= HTML version =======\n')
         app.logger.debug(html)
         app.logger.debug('======= End of email =======')
-    # TODO: Add actual email-sending code here!
+
     m = Message(subject, recipients=[email])
     m.message = text
     m.html = html
